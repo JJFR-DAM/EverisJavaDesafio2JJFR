@@ -23,12 +23,12 @@ public class FPDual {
 		try {
 			Scanner sc = new Scanner(System.in);
 			System.out.println("PROPORCIONA SU NOMBRE DE JUGADOR:");
-			String nombreJugador = sc.nextLine();
+			String NickName = sc.nextLine();
 			Pinball pinball = new Pinball();
-			pinball.setNombreJugador(nombreJugador);
+			pinball.setNickName(NickName);
 			pinball.launchBall();
 			if (pinball instanceof Pinball) {
-				System.out.println("Este pinball ha sido ideado\ny creado con propósitos meramente lucrativos.\nDesde EVERIS esperamos que haya disfrutado.");
+				System.out.println("\nEste pinball ha sido ideado\ny creado con propósitos meramente lucrativos.\nDesde EVERIS esperamos que haya disfrutado.");
 			}
 			sc.close();
 		} catch (Exception e) {

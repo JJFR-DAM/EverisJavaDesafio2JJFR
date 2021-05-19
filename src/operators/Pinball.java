@@ -6,40 +6,56 @@ public class Pinball {
 
 	// Declaración de variables:
 
-	private static int puntuacion = 0;
-	private static int probabilidad = 1000;
-	private static int contadorProb = 0;
-	private static int tirada = 0;
-	private String NombreJugador;
-	public static String opcion;
+	private static int score = 0;
+	private static int probability = 1000;
+	private static int estimateProb = 0;
+	private static int game = 0;
+	private static String NickName;
+	public static String option;
 
 	// Métodos Getters & Setters
 
-	public int getPuntuacion() {
-		return puntuacion;
+	public int getScore() {
+		return score;
 	}
 
-	public static int getTirada() {
-		return tirada;
+	public static int getGame() {
+		return game;
 	}
 
-	public String getNombreJugador() {
-		return NombreJugador;
+	public static String getNickName() {
+		return NickName;
 	}
 
-	public void setNombreJugador(String nombreJugador) {
-		NombreJugador = nombreJugador;
+	public void setNickName(String NickName) {
+		Pinball.NickName = NickName;
 	}
 
 	// Método constructor:
 
-	public Pinball(String nombreJugador) {
+	public Pinball(String NickName) {
 		super();
-		NombreJugador = nombreJugador;
+		Pinball.NickName = NickName;
 	}
 
 	public Pinball() {
 		super();
+	}
+
+	// Método para visualizar Score:
+
+	public static void viewScore() {
+		System.out.println("LA PUNTUACION OBTENIDA POR " + getNickName() + " ES: " + score + " POINTS" + "\n"
+				+ "NUMERO DE TIRADAS CONSEGUIDAS: " + game + " THROW");
+	}
+
+	// Método para calcular Probability:
+
+	public static void calculateProb() {
+		for (int i = 0; i < 30; i++) {
+			estimateProb = (int) (Math.random() * 10) + 1;
+			probability -= estimateProb;
+		}
 	}
 
 	// Método para lanzar la bola:
@@ -71,26 +87,26 @@ public class Pinball {
 
 				// Obtencion de la opción para el Switch Case.
 				System.out.println("\n      --- Introducir numero ---");
-				opcion = sc.nextLine();
+				option = sc.nextLine();
 
 				// Se trabaja el String para quitar posibles excepciones.
 
-				opcion = opcion.toLowerCase();
-				if (opcion.equals("uno")) {
-					opcion = opcion.replaceAll("uno", "1");
-				} else if (opcion.equals("dos")) {
-					opcion = opcion.replaceAll("dos", "2");
-				} else if (opcion.equals("tres")) {
-					opcion = opcion.replaceAll("tres", "3");
-				} else if (opcion.equals("cuatro")) {
-					opcion = opcion.replaceAll("cuatro", "4");
-				} else if (opcion.equals("cinco")) {
-					opcion = opcion.replaceAll("cinco", "5");
+				option = option.toLowerCase();
+				if (option.equals("uno")) {
+					option = option.replaceAll("uno", "1");
+				} else if (option.equals("dos")) {
+					option = option.replaceAll("dos", "2");
+				} else if (option.equals("tres")) {
+					option = option.replaceAll("tres", "3");
+				} else if (option.equals("cuatro")) {
+					option = option.replaceAll("cuatro", "4");
+				} else if (option.equals("cinco")) {
+					option = option.replaceAll("cinco", "5");
 				}
 
 				// Switch Case en el que se subdividen las opciones.
 
-				switch (Integer.parseInt(opcion)) {
+				switch (Integer.parseInt(option)) {
 				/*
 				 * Se procesa las tiradas en los casos 1-3, en ellas se utiliza un bucle para
 				 * generar aleatoriamente una modificación de la probabilidad de seguir en
@@ -98,30 +114,21 @@ public class Pinball {
 				 */
 				case 1:
 					System.out.println("HAS SELECCIONADO TIRADA DÉBIL");
-					puntuacion += (Math.random() * 100) + 1;
-					tirada = getTirada() + 1;
-					for (int i = 0; i < 100; i++) {
-						contadorProb = (int) (Math.random() * 10) + 1;
-						probabilidad -= contadorProb;
-					}
+					score += 1000 * (Math.random() * 100) + 1;
+					game = getGame() + 1;
+					calculateProb();
 					break;
 				case 2:
 					System.out.println("HAS SELECCIONADO TIRADA MEDIA");
-					puntuacion += 2 * (Math.random() * 100) + 1;
-					tirada = getTirada() + 1;
-					for (int i = 0; i < 100; i++) {
-						contadorProb = (int) (Math.random() * 10) + 1;
-						probabilidad -= contadorProb;
-					}
+					score += 2000 * (Math.random() * 100) + 1;
+					game = getGame() + 1;
+					calculateProb();
 					break;
 				case 3:
 					System.out.println("HAS SELECCIONADO TIRADA FUERTE");
-					puntuacion += 3 * (Math.random() * 100) + 1;
-					tirada = getTirada() + 1;
-					for (int i = 0; i < 10; i++) {
-						contadorProb = (int) (Math.random() * 10) + 1;
-						probabilidad -= contadorProb;
-					}
+					score += 3000 * (Math.random() * 100) + 1;
+					game = getGame() + 1;
+					calculateProb();
 					break;
 				/*
 				 * Se muestra por consola la puntuación, el nombre del jugador y las tiradas que
@@ -129,16 +136,14 @@ public class Pinball {
 				 */
 				case 4:
 					System.out.println("HAS SELECCIONADO VER LA PUNTUACIÓN");
-					System.out.println("LA PUNTUACION OBTENIDA POR " + getNombreJugador() + " ES: " + puntuacion + "\n"
-							+ "NUMERO DE TIRADAS CONSEGUIDAS: " + tirada);
+					viewScore();
 					break;
 				/*
 				 * Su uso es el de finalizar el programa y mostrar los datos como en el caso 4.
 				 */
 				case 5:
 					System.out.println("APAGANDO, GRACIAS POR JUGAR");
-					System.out.println("LA PUNTUACION OBTENIDA POR " + getNombreJugador() + " ES: " + puntuacion + "\n"
-							+ "NUMERO DE TIRADAS CONSEGUIDAS: " + tirada);
+					viewScore();
 					break;
 				default:
 					System.out.println("ERROR 404: NOT FOUND");
@@ -147,13 +152,12 @@ public class Pinball {
 			} catch (Exception e) {
 				System.out.println("ERROR \nIntroducir la opcion sin carácteres especiales/signos de puntuación/etc.");
 			}
-		} while (opcion != "1" && probabilidad > 0 || opcion != "2" && probabilidad > 0
-				|| opcion != "3" && probabilidad > 0 || opcion != "4" && probabilidad > 0
-				|| opcion != "5" && probabilidad > 0);
+		} while (option != "1" && probability > 0 || option != "2" && probability > 0
+				|| option != "3" && probability > 0 || option != "4" && probability > 0
+				|| option != "5" && probability > 0);
 
 		System.out.println("HAS FALLADO, BUEN INTENTO.");
-		System.out.println("LA PUNTUACION OBTENIDA POR " + getNombreJugador() + " ES: " + puntuacion + "." + "\n"
-				+ "NUMERO DE TIRADAS CONSEGUIDAS: " + tirada + ".");
+		viewScore();
 		System.out.println("APAGANDO, GRACIAS POR JUGAR");
 
 		/*
@@ -166,5 +170,4 @@ public class Pinball {
 
 		sc.close();
 	}
-
 }
